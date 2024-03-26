@@ -17,7 +17,6 @@ int** tablero_inicial(void);
 int** imprime_juegoactual(int **arr);
 void ingresa_numero(int **);
 bool verificaCasilla_ingresada(int **,int,int,int);
-void imprime_estadoActual();
 
 
 int main(){//Inicio del main
@@ -36,10 +35,11 @@ int main(){//Inicio del main
 				ingresa_numero(ptr_tablero);
 				juega=menu();
 				break;
-			/*case 2:
-				
+			case 2:
+				imprime_juegoactual(ptr_tablero);
+				juega=menu();
 				break;
-			*/	
+				
 			i++;
 			default:
 			juega=menu();
@@ -100,7 +100,7 @@ void ingresa_numero(int **tablero){
 	S("%d",&numero);
 	
 	if(verificaCasilla_ingresada(tablero,fila,columna,numero)){
-		tablero[fila][columna]=numero;
+		tablero[fila-1][columna-1]=numero;
 		P("El numero fue agregado exitosamente.\n");
 	}
 	else{
@@ -128,8 +128,4 @@ bool verificaCasilla_ingresada(int **tablero, int fil, int col, int num) {
     }
 
     return true; // Número válido para la casilla
-}
-
-void imprime_estadoActual(){
-	
 }
