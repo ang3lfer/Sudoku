@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define P printf
 #define S scanf
@@ -14,7 +15,9 @@ typedef struct juego JUEGO;
 int menu(void);
 int** tablero_inicial(void);
 int** imprime_juegoactual(int **arr);
-void ingresa_numero();
+void ingresa_numero(int **);
+bool verificaCasilla_ingresada(int **,int,int,int);
+void imprime_estadoActual();
 
 
 int main(){//Inicio del main
@@ -27,16 +30,21 @@ int main(){//Inicio del main
 	ptr_tablero=tablero_inicial();
 	juega=menu();
 	
-	/*while(juega!=4){
+	while(juega!=4){
 		switch(juega){
 			case 1:
-				ingresa_numero();
+				ingresa_numero(ptr_tablero);
+				juega=menu();
 				break;
+			/*case 2:
+				
+				break;
+			*/	
 			i++;
-			//default;
+			default:
 			juega=menu();
 		}
-	}*/
+	}
 	
 	return 0;
 }//Fin del main
@@ -72,17 +80,56 @@ int** imprime_juegoactual(int **arr){
 }
 
 int menu(void){
+	int opcion;
 	P("\nPresione el numero indicado en las opciones del menu, presione 4 para guardar y salir.\n");
 	P("\nMENU DE JUEGO:\n 1-$ Ingresa valor al tablero.\n2-$ Imprimir estado actual del juego\n3-$ Cambiar valor ingresado\n"
-	"4-$ Salir (Guardado automatico)");
+	"4-$ Salir (Guardado automatico)\n");
+	P("$:");S("%d",&opcion);
+	return opcion;
 }
 
-void ingresa_numero(){
-	int fila=0,columna=0;
+void ingresa_numero(int **tablero){
+	
+	int fila=0,columna=0,numero;
 	P("SELECCIONASTE INGRESAR NUMERO AL TABLERO:\n");
 	P("Indique la fila (1-9): ");
 	S("%d",&fila);
 	P("Indique la columna (1-9): ");
 	S("%d",&columna);
+	P("Ingrese el numero para la casilla (%d,%d):",fila,columna);
+	S("%d",&numero);
+	
+	if(verificaCasilla_ingresada(tablero,fila,columna,numero)){
+		tablero[fila][columna]=numero;
+		P("El numero fue agregado exitosamente.\n");
+	}
+	else{
+		P("Numero no valido, vuelva a intentarlo.\n");
+	}
+	
+}
+
+bool verificaCasilla_ingresada(int **tablero, int fil, int col, int num) {
+    // Verificar la fila y la columna
+    for (int i = 0; i < 9; i++) {
+        if (tablero[fil][i] == num || tablero[i][col] == num) {
+            return false; // Número repetido encontrado en la fila o columna
+        }
+    }
+    // Verificar el cuadrante 3x3
+    int inicioFila = fil - fil % 3;
+    int inicioCol = col - col % 3;
+    for (int i = inicioFila; i < inicioFila + 3; i++) {
+        for (int j = inicioCol; j < inicioCol + 3; j++) {
+            if (tablero[i][j] == num) {
+                return false; // Número repetido encontrado en el cuadrante 3x3
+            }
+        }
+    }
+
+    return true; // Número válido para la casilla
+}
+
+void imprime_estadoActual(){
 	
 }
