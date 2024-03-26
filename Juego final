@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define P printf
+#define S scanf
+
+struct juego{
+	int tablero[9][9];//tablero actual del juego
+	char jugador[30];//nombre del jugador
+};
+
+typedef struct juego JUEGO;
+
+int menu(void);
+int** tablero_inicial(void);
+int** imprime_juegoactual(int **arr);
+void ingresa_numero();
+
+
+int main(){//Inicio del main
+	
+	int juega=0,i=0;
+	int **ptr_tablero;
+	P("BIENVENIDO AL SUDOUKU\n Presione 0 para empezar:");
+	S("%d",&juega);
+	P("TABLERO INICIAL:\n");
+	ptr_tablero=tablero_inicial();
+	juega=menu();
+	
+	/*while(juega!=4){
+		switch(juega){
+			case 1:
+				ingresa_numero();
+				break;
+			i++;
+			//default;
+			juega=menu();
+		}
+	}*/
+	
+	return 0;
+}//Fin del main
+
+int** tablero_inicial(){
+	
+	int** tab=(int **)malloc(9 * sizeof(int *));//Reservas memoria para cada fila
+	 for (int i = 0; i < 9; i++) {
+        tab[i] = (int *)malloc(9 * sizeof(int)); // Reservas memoria para cada columna
+    }
+    
+	tab[0][0]=5;tab[1][0]=6;tab[2][0]=0;tab[3][0]=8;tab[4][0]=4;tab[5][0]=7;tab[6][0]=0;tab[7][0]=0;tab[8][0]=0;
+	tab[0][1]=0;tab[1][1]=0;tab[2][1]=9;tab[3][1]=0;tab[4][1]=0;tab[5][1]=0;tab[6][1]=6;tab[7][1]=0;tab[8][1]=0;
+	tab[0][2]=0;tab[1][2]=0;tab[2][2]=8;tab[3][2]=0;tab[4][2]=0;tab[5][2]=0;tab[6][2]=0;tab[7][2]=0;tab[8][2]=0;
+	tab[0][3]=0;tab[1][3]=1;tab[2][3]=0;tab[3][3]=0;tab[4][3]=8;tab[5][3]=0;tab[6][3]=0;tab[7][3]=4;tab[8][3]=0;
+	tab[0][4]=7;tab[1][4]=9;tab[2][4]=0;tab[3][4]=6;tab[4][4]=0;tab[5][4]=2;tab[6][4]=0;tab[7][4]=1;tab[8][4]=8;
+	tab[0][5]=0;tab[1][5]=5;tab[2][5]=0;tab[3][5]=0;tab[4][5]=3;tab[5][5]=0;tab[6][5]=0;tab[7][5]=9;tab[8][5]=0;
+	tab[0][6]=0;tab[1][6]=0;tab[2][6]=0;tab[3][6]=0;tab[4][6]=0;tab[5][6]=0;tab[6][6]=2;tab[7][6]=0;tab[8][6]=0;
+	tab[0][7]=0;tab[1][7]=0;tab[2][7]=6;tab[3][7]=0;tab[4][7]=0;tab[5][7]=0;tab[6][7]=8;tab[7][7]=0;tab[8][7]=7;
+	tab[0][8]=0;tab[1][8]=0;tab[2][8]=0;tab[3][8]=3;tab[4][8]=1;tab[5][8]=6;tab[6][8]=0;tab[7][8]=5;tab[8][8]=9;
+	imprime_juegoactual(tab);
+	return tab;
+}
+
+int** imprime_juegoactual(int **arr){
+	for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
+    }
+    return arr;
+}
+
+int menu(void){
+	P("\nPresione el numero indicado en las opciones del menu, presione 4 para guardar y salir.\n");
+	P("\nMENU DE JUEGO:\n 1-$ Ingresa valor al tablero.\n2-$ Imprimir estado actual del juego\n3-$ Cambiar valor ingresado\n"
+	"4-$ Salir (Guardado automatico)");
+}
+
+void ingresa_numero(){
+	int fila=0,columna=0;
+	P("SELECCIONASTE INGRESAR NUMERO AL TABLERO:\n");
+	P("Indique la fila (1-9): ");
+	S("%d",&fila);
+	P("Indique la columna (1-9): ");
+	S("%d",&columna);
+	
+}
