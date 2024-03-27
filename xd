@@ -1,0 +1,16 @@
+void rotarMatriz90(int **tablero) {
+    int temp[9][9];
+//traspone la matriz cambiando las filas por las columnas
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            temp[i][j] = tablero[j][i];
+        }
+    }
+    //se invierte cada fila para que el ultimo valor se convierta en el peimero y viceversa
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            tablero[i][j] = temp[i][8 - j];
+        }
+    }
+}
+//ahora que ya se traspuso la matriz y se invertieron las filas de la matriz, podemos decir que ya se roto 90 grados. 
